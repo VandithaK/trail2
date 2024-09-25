@@ -1,0 +1,11 @@
+<div class="cmp-title cmp-title--default"
+     data-sly-use.title="com.ihg.kernel.core.models.IHGTitle"
+     id="${title.id}"
+     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+     data-sly-test.text="${title.text}" data-sly-attribute.data-component-promo-passthrough="${title.enablePromoPassthrough}">
+    <div data-sly-test="${!title.preTitleHidden && title.preTitle}" class="cmp-title__pretitle-container">
+        <div class="cmp-title__pretitle">${title.preTitle @context = 'html'}</div>
+    </div>
+    <h1 class="cmp-title__text cmp-component-alignment" data-sly-test="${text}" data-sly-element="${title.type}"><a data-sly-attribute.data-legalese-id="${title.legaleseId}" data-campaigntype="${title.campaignType}" data-campaignname="${title.campaignName}" data-additionalcmparams="${title.additionalCMParams}" data-skiplocalization="${title.skipLocalization}" data-sly-unwrap="${!title.linkURL || title.linkDisabled}" class="cmp-title__link" href="${title.linkURL  @ context ='html'}" target="${title.target}">${text @context = 'html'}</a></h1>
+</div>
+<sly data-sly-call="${template.placeholder @ isEmpty=!text, classAppend='cmp-title'}"></sly>

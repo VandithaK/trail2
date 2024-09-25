@@ -1,0 +1,16 @@
+<sly data-sly-use.cta="com.ihg.kernel.core.models.CallToAction"
+	 data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+	 data-sly-call="${templates.placeholder @ isEmpty = !cta.text}"></sly>
+
+<sly data-sly-use.cta="com.ihg.kernel.core.models.CallToAction">
+	<sly data-sly-test="${cta.text && cta.link}">
+        <div class="cmp-button-wrapper ${properties.isBookNowButton ? 'nav-booknowbutton' : ''}" data-sly-attribute.data-component-promo-passthrough="${cta.enablePromoPassthrough}" id ="${cta.buttonId}" offerDetails ="${properties.offerDetails}" data-sly-attribute.data-component-xfbooknow="${properties.isBookNowButton}">
+            <sly data-sly-test="${cta.enableIcon == 'true'}">
+                <span class="cmp-button__tertiary-icon"><img src="${cta.iconUrl}"/></span>
+            </sly>
+            <a data-sly-attribute.data-legalese-id="${cta.legaleseId}" data-campaigntype="${cta.campaignType}" data-campaignname="${cta.campaignName}" data-additionalcmparams="${cta.additionalCMParams}" data-skiplocalization="${cta.skipLocalization}" class="cmp-button" href="${cta.link @ context ='html'}" target="${cta.target}" aria-label="${cta.accessibilityLabel}" >
+                <span class="cmp-button__text">${cta.text}</span>
+            </a>
+        </div>
+	</sly>
+</sly>

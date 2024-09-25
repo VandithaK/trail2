@@ -1,0 +1,13 @@
+<sly data-sly-use.container="com.ihg.kernel.core.models.Container">
+    <span class="noffers"
+        data-error-keyword1="${'ihg.kernel.components.noofferserror' @i18n}"
+        data-error-keyword2="${'ihg.kernel.components.noofferserror.soon' @i18n}"
+        data-alert="https://digital.ihg.com/is/content/ihg/icon-outline-alert">
+    </span>
+    <sly data-sly-test.responsive="${container.layout == 'RESPONSIVE_GRID'}"
+         data-sly-use.responsiveGridTemplate="responsiveGrid.html"
+         data-sly-call="${responsiveGridTemplate.responsiveGrid @ container=container}"></sly>
+    <sly data-sly-test.simple="${!responsive}"
+         data-sly-use.simpleTemplate="simple.html"
+         data-sly-call="${simpleTemplate.simple @ container=container}"></sly>
+</sly>

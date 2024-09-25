@@ -1,0 +1,28 @@
+<!-- This fragment is used with Offers component styles-->
+<sly data-sly-use.loyaltyOfferComponent="com.ihg.cq.config.LoyaltyOfferComponentEnvironmentConfig" />
+<script>
+try {
+	var link = document.createElement('link');
+	link.rel = "stylesheet";
+	var page_data_country = document.getElementById('UHF_country');
+    var page_data_language = document.getElementById('UHF_language');
+    if(page_data_country == null || page_data_country == undefined || page_data_country == '') {
+    	page_data_country = "us";
+    } else {
+		page_data_country = page_data_country.value;
+    }
+    if(page_data_language == null || page_data_language == undefined || page_data_language == '') {
+    	page_data_language = "en";
+    } else {
+		page_data_language = page_data_language.value;
+    }
+    var cssURL = "${loyaltyOfferComponent.loyaltyOfferCSSURL @ context='unsafe'}";
+	cssURL = cssURL.replace("\${mbox.siteCountry}",page_data_country);
+    cssURL = cssURL.replace("\${mbox.siteLanguage}",page_data_language);
+    link.href = cssURL;
+	var currentScriptTag = document.currentScript;
+    currentScriptTag.parentElement.appendChild(link);
+} catch (e) {
+    console.error('Error in Offers component styles', e);
+}
+</script>

@@ -1,0 +1,148 @@
+<sly data-sly-use.teaserModel="com.ihg.kernel.core.models.IHGMerchComponent"/>
+<sly data-sly-test.largeImagePresence="${teaserModel.backGroundLargeImage || teaserModel.backGroundLargeImage != ' '}"></sly>
+<sly data-sly-test="${wcmmode.edit}">
+    <div class="cq-placeholder cq-marker-start"></div>
+</sly>
+
+<div class="cmp-teaser cmp-teaser--default ${teaserModel.textCtaAlignment} cmp-teaser--visual--${teaserModel.visualSuite}">
+
+    <div class="cmp-teaser__image">
+        <div class="cmp-image${!wcmmode.disabled ? ' cq-dd-image' : ''}" itemscope itemtype="https://schema.org/ImageObject">
+            <div class="overlaytop"></div>
+            <div class="overlaytop-light"></div>
+            <div class="overlaybottom"></div>
+            <picture class="cmp-image__image" data-sly-test="${largeImagePresence}">
+                <source media="(max-width:991px)" srcset="${teaserModel.backGroundSmallImage ? teaserModel.backGroundSmallImage : teaserModel.backGroundLargeImage}"/>
+                <img src="${teaserModel.backGroundLargeImage @ context = 'text'}" alt="${teaserModel.backgroundAltText}"/>
+            </picture>
+            <sly data-sly-test="${teaserModel.caption}">
+                <div class="cmp-teaser__caption">
+                    <div>${teaserModel.caption}</div>
+                </div>
+            </sly>
+        </div>
+    </div>
+    <sly data-sly-test="${teaserModel.topPadding}">
+        <sly data-sly-set.topPaddingString="${'{0}{1}{2}' @ format=['padding-top: ', teaserModel.topPadding,'px;']}"/>
+    </sly>
+    <sly data-sly-test="${teaserModel.rightPadding}">
+        <sly data-sly-set.rightPaddingString="${'{0}{1}{2}' @ format=['padding-right: ', teaserModel.rightPadding,'px;']}"/>
+    </sly>
+    <sly data-sly-test="${teaserModel.bottomPadding}">
+        <sly data-sly-set.bottomPaddingString="${'{0}{1}{2}' @ format=['padding-bottom: ', teaserModel.bottomPadding,'px;']}"/>
+    </sly>
+    <sly data-sly-test="${teaserModel.leftPadding}">
+        <sly data-sly-set.leftPaddingString="${'{0}{1}{2}' @ format=['padding-left: ', teaserModel.leftPadding,'px;']}"/>
+    </sly>
+    <sly data-sly-test="${teaserModel.maxWidth}">
+        <sly data-sly-set.maxWidthString="${'{0}{1}{2}' @ format=['max-width: ', teaserModel.maxWidth,'px;']}"/>
+    </sly>
+
+    <div class="cmp-teaser__content">
+        <div class="overlaytop-content"></div>
+        <div class="overlaytop-content-light"></div>
+        <div class="overlaybottom-content"></div>
+        <sly data-sly-test.paddingForAllViewportsBoolean="${properties.paddingForAllViewports == 'true'}"/>
+        <div class="cmp-teaser__content__container" data-sly-attribute.data-paddingForAllViewports="${paddingForAllViewportsBoolean}"
+             style="${maxWidthString @ context='styleString'} ${topPaddingString @ context='styleString'} ${rightPaddingString @ context='styleString'} ${bottomPaddingString @ context='styleString'} ${leftPaddingString @ context='styleString'}">
+            <div data-sly-test="${teaserModel.preTitle}" class="cmp-teaser__pretitle-container">
+                <div class="cmp-teaser__pretitle">${teaserModel.preTitle @ context = 'html'}</div>
+            </div>
+            <span class="cmp-teaser__content-section">
+            <h2 data-sly-test="${teaserModel.title}" class="cmp-teaser__title" data-sly-element="${teaserModel.type}">
+                ${teaserModel.title @ context = 'html'}
+            </h2>
+            <sly data-sly-test="${teaserModel.desc}">
+                <div class="cmp-teaser__description rte"
+                     data-sly-attribute.data-component-char-limit="${properties.enableCharacterLimit}"
+                     data-sly-attribute.data-char-limit="${teaserModel.charLimit}"
+                     data-sly-attribute.data-read-more="${teaserModel.readMoreLabel}"
+                     data-sly-attribute.data-read-less="${teaserModel.readLessLabel}"
+                     data-sly-attribute.data-sub-header="${teaserModel.subHeader}">
+                    ${teaserModel.desc @ context = 'html'}
+                </div>
+            </sly>
+            <sly data-sly-test="${teaserModel.subHeader}">
+                <div class="cmp-teaser__subHeader rte" style="display:none">
+                    ${teaserModel.subHeader @ context = 'html'}
+                </div>
+            </sly>
+            </span>
+            <div class="cmp-teaser__button-container">
+                <div>
+                    <div class="cmp-teaser__action-container ${properties.buttonType}">
+                        <div>
+                            <div class="cmp-button-wrapper">
+                                <sly data-sly-test="${teaserModel.targetExport}">
+                                    <a class="cmp-teaser__action-link cmp-button ${teaserModel.functionality == 'registration'? 'cmp-teaser__register' : ''}"
+                                       href="${teaserModel.ctaURL @ context ='html'}"
+                                       data-loyaltyOfferId="${teaserModel.loyaltyOfferId}"
+                                       data-registeredOfferIds="\${crs.PCR_ID.PROMO_ID}"
+                                       data-registeredCtaLabel="${teaserModel.registeredCtaLabel}"
+                                       data-registeredCtaUrl="${teaserModel.registeredCtaUrl}">
+                                        <span class="cmp-button__text"> ${teaserModel.ctaText}</span>
+                                    </a>
+                                </sly>
+                                <sly data-sly-test="${!teaserModel.targetExport}">
+                                    <a class="cmp-teaser__action-link cmp-button ${teaserModel.functionality == 'registration'? 'cmp-teaser__register' : ''}"
+                                       href="${teaserModel.ctaURL @ context ='uri'}"
+                                       data-loyaltyOfferId="${teaserModel.loyaltyOfferId}"
+                                       data-registeredOfferIds="\${crs.PCR_ID.PROMO_ID}"
+                                       data-registeredCtaLabel="${teaserModel.registeredCtaLabel}"
+                                       data-registeredCtaUrl="${teaserModel.registeredCtaUrl}">
+                                        <span class="cmp-button__text"> ${teaserModel.ctaText}</span>
+                                    </a>
+                                </sly>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-sly-test="${teaserModel.functionality == 'registration'}"
+                         class="cmp-teaser__action-container ${teaserModel.viewDetailsbuttonType}">
+                        <div>
+                            <div class="cmp-button-wrapper">
+                                <a class="cmp-teaser__action-link cmp-button" href="${teaserModel.ctaSecondaryURL @ context ='html'}">
+                                    <span class="cmp-button__text"> ${teaserModel.ctaSecondaryText}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="offer_eligibility rte">
+                <div class="offer_eligibility_message">
+                    <span>${teaserModel.eligibilityMessage}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <sly data-sly-test= "${wcmmode.edit || wcmmode.preview}">
+        <script>
+      //script runs every time component is edited (i.e. a new style is applied)
+      //same js as merch.js loaded by intializer.js
+      var els = $(".merch.cmp-teaser--text-banner, .merch.cmp-teaser--ribbon, .merch.cmp-teaser--icon-text-banner");
+      els.each(function (){
+        if (!$(this).attr("data-modified")){
+            console.log("modifying")
+            $(this).attr({"data-modified": true});
+
+            if($(this).hasClass("cmp-teaser--ribbon")) {
+                var subHeader = $(this).find(".cmp-teaser__description.rte").attr("data-sub-header");
+                $(this).find(".cmp-teaser__content .cmp-teaser__description").html(subHeader);
+            }
+
+            var btnContainer = $(this).find(".cmp-teaser__button-container")[0];
+            $(btnContainer).remove();
+
+            var description = $(this).find(".cmp-teaser__description")[0];
+            $(description).append($(btnContainer));
+
+            if($(this).hasClass("cmp-teaser--text-banner") || $(this).hasClass("cmp-teaser--icon-text-banner")) {
+                var eligibilityContainer = $(this).find(".offer_eligibility")[0];
+                $(eligibilityContainer).remove();
+                $(description).append($(eligibilityContainer));
+            }
+        }
+      })
+      </script>
+    </sly>
+</div>

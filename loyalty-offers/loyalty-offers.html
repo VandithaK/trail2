@@ -1,0 +1,62 @@
+<!--/* dev note: Had to separate out inclusion of the JS elements so that we can pass parameters into the template to render based on publish/author */-->
+<div class="cq-placeholder" data-sly-test="${wcmmode.edit}" data-emptytext="Loyalty Offers Component"></div>
+<sly data-sly-use.pageComponent="com.ihg.kernel.core.models.page.PageComponent"/>
+<sly data-sly-use.loyaltyOfferComponent="com.ihg.kernel.core.models.IHGLoyaltyOfferComponentModel" />
+<sly data-sly-use.offerConfig="com.ihg.cq.config.LoyaltyOfferComponentEnvironmentConfig" />
+<sly data-sly-use.ssiPage="com.ihg.kernel.core.models.page.SSIPage" />
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-test="${ !wcmmode.edit && ssiPage.useSsi }">
+        <!--#include virtual="/content/common/ssi/loyaltyOfferComponent_resources_offers.styles.html" -->
+        <sly data-sly-call="${clientLib.css @ categories='ihg-kernel.microapp.loyalty-offers'}" />
+    </sly>
+    <sly data-sly-test="${ !wcmmode.edit && !ssiPage.useSsi }">
+        <link rel="stylesheet" href="${offerConfig.loyaltyOfferCSSURL @ context='unsafe'}"/>
+        <sly data-sly-call="${clientLib.css @ categories='ihg-kernel.microapp.loyalty-offers'}" />
+    </sly>
+</sly>
+
+<script>
+    //setting the below window variables based on the values in UHF markup 
+    //that can later be referenced in the microapp
+    var page_data_brand = document.getElementById('UHF_brand').value;
+    var page_data_country = document.getElementById('UHF_country').value;
+    var page_data_language = document.getElementById('UHF_language').value;
+</script>
+
+<offers-component
+    data-sly-use.contract="${'behavior.js' @ brandcode=pageComponent.brandCode, brandname=pageComponent.brandName, view=view}"
+    id="${contract.id}"
+    type="${contract.type}"
+    title="${contract.title}"
+    titleSize="${contract.titleSize}"
+    theme="${contract.theme}"
+    view="${contract.view}"
+    brandCode="${contract.brandCode}"
+    brandName="${contract.brandName}"
+></offers-component>
+
+<script>
+    // Declare an empty function
+    var sl_translate = function(){};
+
+    // Add as many of the following directives as you need, each calling the empty function
+    window.sl_tr_start = sl_translate;
+    window.sl_tr_end = sl_translate;
+    window.sl_tr_html_start = sl_translate;
+    window.sl_tr_html_end = sl_translate;
+    window.sl_notr_start = sl_translate;
+    window.sl_notr_end = sl_translate;
+</script>
+
+<!--/* when published */-->
+<sly data-sly-test="${ !wcmmode.edit && ssiPage.useSsi }">
+    <!--#include virtual="/content/common/ssi/loyaltyOfferComponent_resources_offers.scripts.html" -->
+</sly>
+<sly data-sly-test="${ !wcmmode.edit && !ssiPage.useSsi }">
+    <script type="text/javascript" src="${offerConfig.loyaltyOfferJSURL @ context='unsafe'}"></script>
+</sly>
+<!--/* when authoring */-->
+<sly data-sly-test="${ wcmmode.edit || wcmmode.design }">
+    <script type="text/javascript" src="${offerConfig.loyaltyOfferJSURL @ context='unsafe'}"></script>
+</sly>
